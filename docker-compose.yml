@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: todos-backend
+    ports:
+      - "5050:5050"
+    environment:
+      PORT: 5050
+      DATABASE_URL: file:/data/dev.db
+    volumes:
+      - todos-data:/data
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Compiled into the bundle at build time. Override at build for a custom backend URL.
+        NEXT_PUBLIC_API_URL: http://localhost:5050
+    container_name: todos-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  todos-data:

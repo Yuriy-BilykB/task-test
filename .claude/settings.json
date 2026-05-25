@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npx prisma *)",
+      "Bash(sqlite3 dev.db \"SELECT * FROM Category;\")",
+      "Bash(sqlite3 dev.db \"SELECT * FROM Todo;\")",
+      "Bash(sqlite3 dev.db \"INSERT INTO Category \\(id, name\\) VALUES \\('cat_work', 'Work'\\), \\('cat_home', 'Home'\\), \\('cat_personal', 'Personal'\\);\")",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:5000/categories)",
+      "Bash(curl -s http://localhost:5000/todos)",
+      "Bash(lsof -nP -iTCP:5000 -sTCP:LISTEN)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5050/todos)",
+      "Bash(curl -s http://localhost:5050/categories)",
+      "Bash(set -e)",
+      "Bash(curl -s -X POST http://localhost:5050/todos -H 'content-type: application/json' -d '{\"text\":\"Buy milk\",\"categoryId\":\"cat_home\"}')",
+      "Bash(curl -s \"http://localhost:5050/todos?category=cat_home\")",
+      "Bash(node -p \"require\\('./node_modules/zod/package.json'\\).version\")",
+      "Bash(curl -sf http://localhost:3000)",
+      "Bash(node -e \"console.log\\(Object.keys\\(require\\('jest-config'\\).defaults\\).filter\\(k => k.toLowerCase\\(\\).includes\\('setup'\\)\\)\\)\")",
+      "Bash(npm test *)",
+      "Bash(curl -s -o /dev/null -w \"frontend=%{http_code}\\\\n\" http://localhost:3000)",
+      "Bash(curl -s -o /dev/null -w \"backend=%{http_code}\\\\n\" http://localhost:5050/categories)",
+      "Bash(rm -rf /Users/yu_r1/test-task/backend/.git /Users/yu_r1/test-task/frontend/.git && echo \"done\")"
+    ],
+    "additionalDirectories": [
+      "/Users/yu_r1/test-task/backend/.git"
+    ]
+  }
+}
