@@ -7,21 +7,39 @@ services:
       - "5050:5050"
     environment:
       PORT: 5050
-      DATABASE_URL: file:/data/dev.db
-    volumes:
-      - todos-data:/data
+      DATABASE_URL: postgres://postgres:postgres@db:5432/todos
+    depends_on:
+      db:
+        condition: service_healthy
 
   frontend:
     build:
       context: ./frontend
       args:
-        # Compiled into the bundle at build time. Override at build for a custom backend URL.
-        NEXT_PUBLIC_API_URL: http://localhost:5050
+        NEXT_PUBLIC_API_URL: http://backend:5050
     container_name: todos-frontend
     ports:
       - "3000:3000"
     depends_on:
       - backend
 
+  db:
+    image: postgres:16
+    container_name: todos-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todos
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d todos"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 volumes:
-  todos-data:
+  pgdata:

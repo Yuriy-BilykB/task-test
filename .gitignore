@@ -3,9 +3,6 @@ dist/
 .next/
 .env
 .env.local
-*.db
-*.db-journal
-backend/prisma/dev.db*
 backend/dist/
 frontend/.next/
 .DS_Store

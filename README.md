@@ -3,7 +3,7 @@
 Full-stack task manager: tasks belong to categories, each category caps at 5, and completing or deleting a task fires a transient snackbar with **Undo**.
 
 - **Frontend**: Next.js 16 (App Router) + TypeScript + TailwindCSS + React Hook Form + zod + axios + TanStack Query + react-toastify
-- **Backend**: NestJS + Prisma 7 + SQLite (via better-sqlite3 adapter)
+- **Backend**: NestJS + Prisma 7 + PostgreSQL
 
 ```
 test-task/
@@ -14,13 +14,14 @@ test-task/
 
 ## Running locally (no Docker)
 
-Prereqs: Node 20+, npm.
+Prereqs: Node 20+, npm, and a running PostgreSQL 16 (e.g. `docker compose up -d db`).
 
 ### 1. Backend
 
 ```bash
 cd backend
 npm install
+cp .env.example .env             # adjust DATABASE_URL if needed
 npx prisma migrate deploy        # apply schema
 npm run db:seed                  # seeds 5 default categories
 npm run start:dev                # listens on PORT (default 5050)
@@ -43,7 +44,7 @@ npm run dev                      # http://localhost:3000
 docker compose up --build
 ```
 
-- Backend on `http://localhost:5050` (SQLite stored in the `todos-data` named volume so it survives restarts; migrations + seed run on first boot).
+- Backend on `http://localhost:5050` (PostgreSQL stored in the `pgdata` named volume so it survives restarts; migrations + seed run on first boot).
 - Frontend on `http://localhost:3000`.
 
 If you deploy the backend somewhere else, rebuild the frontend with `NEXT_PUBLIC_API_URL` baked in:

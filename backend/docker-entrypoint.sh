@@ -6,10 +6,10 @@ npx prisma migrate deploy
 
 echo "Seeding categories (idempotent)…"
 node -e "
-const { PrismaBetterSqlite3 } = require('@prisma/adapter-better-sqlite3');
+const { PrismaPg } = require('@prisma/adapter-pg');
 const { PrismaClient } = require('@prisma/client');
 (async () => {
-  const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL });
+  const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
   const prisma = new PrismaClient({ adapter });
   for (const name of ['Work','Home','Personal','Errands','Study']) {
     await prisma.category.upsert({ where: { name }, update: {}, create: { name } });
