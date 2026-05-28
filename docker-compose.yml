@@ -1,25 +1,21 @@
 services:
   backend:
-    build:
-      context: ./backend
+    image: yur14/todos-backend:latest
     container_name: todos-backend
     ports:
       - "5050:5050"
     environment:
-      PORT: 5050
       DATABASE_URL: postgres://postgres:postgres@db:5432/todos
     depends_on:
-      db:
-        condition: service_healthy
+      - db
 
   frontend:
-    build:
-      context: ./frontend
-      args:
-        NEXT_PUBLIC_API_URL: http://backend:5050
+    image: yur14/todos-frontend:latest
     container_name: todos-frontend
     ports:
       - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:5050
     depends_on:
       - backend
 
@@ -35,11 +31,6 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d todos"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
 
 volumes:
   pgdata:
