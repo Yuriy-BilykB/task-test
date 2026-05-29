@@ -5,9 +5,8 @@ services:
     ports:
       - "5050:5050"
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/todos
-    depends_on:
-      - db
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/todos
+
 
   frontend:
     image: yur14/todos-frontend:latest
@@ -18,19 +17,3 @@ services:
       NEXT_PUBLIC_API_URL: http://backend:5050
     depends_on:
       - backend
-
-  db:
-    image: postgres:16
-    container_name: todos-db
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: todos
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-
-volumes:
-  pgdata:

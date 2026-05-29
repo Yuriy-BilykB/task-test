@@ -18,12 +18,21 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Build & Push backend
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/todos-backend:latest ./backend
-          docker push ${{ secrets.DOCKER_USERNAME }}/todos-backend:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/todos-backend:latest
+          platforms: linux/amd64,linux/arm64
 
       - name: Build & Push frontend
-        run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/todos-frontend:latest ./frontend
-          docker push ${{ secrets.DOCKER_USERNAME }}/todos-frontend:latest
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/todos-frontend:latest
+          platforms: linux/amd64,linux/arm64

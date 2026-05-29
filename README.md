@@ -57,13 +57,13 @@ docker compose build --build-arg NEXT_PUBLIC_API_URL=https://your-api.example.co
 
 | Method | Path             | Body                                | Notes                                            |
 |--------|------------------|-------------------------------------|--------------------------------------------------|
-| GET    | `/categories`    | —                                   | List categories (seeded)                         |
-| GET    | `/todos`         | —                                   | Optional `?category=<id>` filter                 |
-| POST   | `/todos`         | `{ text, categoryId }`              | 400 if the category already has 5 tasks          |
-| PATCH  | `/todos/:id`     | `{ completed?: boolean }`           |                                                  |
-| DELETE | `/todos/:id`     | —                                   |                                                  |
+| GET    | `/api/categories`    | —                                   | List categories (seeded)                         |
+| GET    | `/api/todos`         | —                                   | Optional `?category=<id>` filter                 |
+| POST   | `/api/todos`         | `{ text, categoryId }`              | 400 if the category already has 5 tasks          |
+| PATCH  | `/api/todos/:id`     | `{ completed?: boolean }`           |                                                  |
+| DELETE | `/api/todos/:id`     | —                                   |                                                  |
 
-The 400 from `POST /todos` is rendered to the user as a toast.
+The 400 from `POST /api/todos` is rendered to the user as a toast.
 
 ## Features
 
