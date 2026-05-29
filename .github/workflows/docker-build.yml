@@ -36,3 +36,5 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/todos-frontend:latest
           platforms: linux/amd64,linux/arm64
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
